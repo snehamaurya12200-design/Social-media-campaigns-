@@ -1,0 +1,473 @@
+import { useState } from “react”;
+
+const POSTS = [
+{
+day: “Mon”,
+date: “Apr 28”,
+time: “9:00 AM”,
+title: “Brand Launch / Hook Post”,
+theme: “🚀 Ignite Your Career”,
+canvaTitle: “Stop waiting. Start doing.”,
+canvaSubtitle: “Real internships. Real experience. Real results.”,
+canvaVisual: “Bold split layout — deep navy left half with white headline, coral-orange right half with a student at a laptop. InternSpark logo centered at the bottom.”,
+caption: `Your career doesn't start after graduation — it starts NOW. 🔥\n\nAt InternSpark, we connect ambitious students with internships that actually mean something. Not coffee-fetching. Not busywork. Real projects. Real mentors. Real impact.\n\n✅ 500+ partner companies\n✅ Roles across tech, marketing, finance, design & more\n✅ Dedicated placement support\n\nReady to spark something? Link in bio to explore open internships. 👇`,
+hashtags: “#InternSpark #InternshipOpportunities #CareerStart #StudentLife #LandYourDreamInternship #InternLife #CareerGoals #FutureLeaders”,
+platform: “Instagram + LinkedIn”,
+type: “Awareness”
+},
+{
+day: “Tue”,
+date: “Apr 29”,
+time: “12:00 PM”,
+title: “How It Works”,
+theme: “🗺️ Your 3-Step Journey”,
+canvaTitle: “From Application to Offer in 3 Steps”,
+canvaSubtitle: “We handle the hard part.”,
+canvaVisual: “Clean horizontal timeline infographic on off-white background. Three bold numbered steps with icon illustrations: 1) Create Profile, 2) Get Matched, 3) Start Interning. Warm coral accent color for numbers.”,
+caption: `Confused about where to start? We got you. 💡\n\nHere's how InternSpark works:\n\n1️⃣ Create your free profile — takes 5 minutes\n2️⃣ Get matched with internships that fit your skills & goals\n3️⃣ Apply, interview, and start gaining real experience\n\nNo endless job boards. No cold emailing into the void. Just a smarter path to the internship you deserve.\n\n🔗 Sign up free — link in bio!`,
+hashtags: “#HowItWorks #InternSpark #InternshipSearch #CareerAdvice #StudentOpportunities #CareerTips #CollegeLife #InternMatch”,
+platform: “Instagram + Facebook”,
+type: “Educational”
+},
+{
+day: “Wed”,
+date: “Apr 30”,
+time: “11:00 AM”,
+title: “Student Success Story”,
+theme: “⭐ Real Student, Real Results”,
+canvaTitle: ‘“I got hired full-time after my InternSpark internship.”’,
+canvaSubtitle: “— Priya M., Software Intern turned Full-Time Engineer”,
+canvaVisual: “Magazine-style portrait layout. Student photo on the right, bold pull-quote on the left in deep navy. Gold star icons and InternSpark branding footer.”,
+caption: `This is why we do what we do. 🌟\n\nPriya applied through InternSpark during her junior year. 12 weeks later, she had a full-time offer waiting for her at graduation.\n\n"I didn't think I'd find something this good so fast. InternSpark matched me with a company that actually cared about my growth."\n\nYour story could be next. Thousands of students have already found their spark — now it's your turn.\n\n💬 Drop a 🔥 below if you're ready to land yours!`,
+hashtags: “#StudentSuccess #InternSpark #InternshipSuccess #FromInternToEmployee #CareerWins #RealResults #TechIntern #WomenInTech”,
+platform: “Instagram + LinkedIn”,
+type: “Social Proof”
+},
+{
+day: “Thu”,
+date: “May 1”,
+time: “10:00 AM”,
+title: “Industries We Cover”,
+theme: “🌐 Find Your Field”,
+canvaTitle: “Whatever your passion — there’s an internship for it.”,
+canvaSubtitle: “Explore 15+ industries on InternSpark.”,
+canvaVisual: “Colorful icon grid on dark background. Each industry represented by a glowing icon tile: 💻 Tech, 📊 Finance, 🎨 Design, 📱 Marketing, 🏥 Healthcare, ⚖️ Law, 🎬 Media, 🌿 Sustainability + more.”,
+caption: `No matter what you're studying — we have a role for you. 🎓\n\n💻 Software & Tech\n📊 Finance & Banking\n🎨 Design & UX\n📱 Digital Marketing\n🏥 Healthcare & Biotech\n⚖️ Law & Policy\n🎬 Media & Content\n🌿 Sustainability & Impact\n\n…and 8 more industries actively hiring now.\n\nInternSpark isn't one-size-fits-all. We match YOU to the right field, right company, right moment.\n\n👆 Tap the link in bio to browse by industry.`,
+hashtags: “#InternSpark #InternshipOpportunities #AllIndustries #TechIntern #MarketingIntern #DesignIntern #FinanceIntern #CollegeStudents #CareerExploration”,
+platform: “Instagram + LinkedIn”,
+type: “Educational”
+},
+{
+day: “Fri”,
+date: “May 2”,
+time: “3:00 PM”,
+title: “Resume & Profile Tips”,
+theme: “📝 Stand Out & Get Noticed”,
+canvaTitle: “5 Resume Mistakes That Cost You the Internship”,
+canvaSubtitle: “Fix these before you apply.”,
+canvaVisual: “Bold editorial layout with a red ‘X’ and green checkmark contrast system. Dark charcoal background, crisp white text, numbered list design with clear before/after comparisons.”,
+caption: `Your resume is your first impression. Make it count. ✅\n\nHere are 5 mistakes we see students make — and how to fix them:\n\n❌ Generic objective statements → ✅ Tailored 2-line career summary\n❌ Just listing duties → ✅ Quantify your achievements\n❌ Huge walls of text → ✅ Bullet points, white space, clarity\n❌ Missing keywords → ✅ Match the job description language\n❌ No skills section → ✅ List tools, software, and soft skills\n\nAt InternSpark, we also offer free profile reviews for all registered students. 🎁\n\nSign up and let us help you put your best foot forward.`,
+hashtags: “#ResumeTips #InternSpark #InternshipAdvice #CareerTips #ResumeHelp #CollegeCareer #JobSearchTips #StudentAdvice #LandTheInternship”,
+platform: “Instagram + Twitter/X”,
+type: “Value / Tips”
+},
+{
+day: “Sat”,
+date: “May 3”,
+time: “10:00 AM”,
+title: “Engagement / Poll Post”,
+theme: “🗣️ We Want to Hear from You”,
+canvaTitle: “What’s your #1 internship challenge?”,
+canvaSubtitle: “Vote below 👇”,
+canvaVisual: “Conversational, vibrant design with hand-drawn style elements. Bright yellow background, four labeled answer bubbles styled like a poll widget. Fun and approachable energy.”,
+caption: `Be honest — what's the hardest part of finding an internship? 🤔\n\nA) Not knowing where to look\nB) Getting no responses to applications\nC) Lacking experience to qualify\nD) Nailing the interview\n\nDrop your answer in the comments! 👇 We read every single one — and we build our resources around what YOU actually need.\n\nThat's what makes InternSpark different. We're not just a job board. We're your career community. 💬`,
+hashtags: “#InternSpark #PollTime #InternshipChallenges #StudentVoices #CareerCommunity #CollegeLife #InternshipHelp #WeAreListening”,
+platform: “Instagram (Poll Sticker) + LinkedIn Poll”,
+type: “Engagement”
+},
+{
+day: “Sun”,
+date: “May 4”,
+time: “11:00 AM”,
+title: “CTA / Sign-Up Push”,
+theme: “🎯 Your Next Step Starts Here”,
+canvaTitle: “This week could change everything.”,
+canvaSubtitle: “Join InternSpark — free for students.”,
+canvaVisual: “Cinematic full-bleed design. Sunrise/horizon photograph with deep gradient overlay. Large centered white headline. Glowing coral CTA button. Subtle particle or spark animation elements.”,
+caption: `Sunday = reset day. 🌅\n\nWhile others are scrolling, you could be setting yourself up for the internship that changes your life.\n\nInternSpark is 100% free for students. In minutes, you can:\n\n→ Build a profile that gets noticed\n→ Get matched with real open roles\n→ Access career coaching and resume tips\n→ Join a community of 50,000+ ambitious students\n\nThis week, take the first step. You've got nothing to lose and everything to gain. 🔥\n\n🔗 Sign up now — link in bio.`,
+hashtags: “#InternSpark #SundayMotivation #CareerGoals #SignUpNow #FreeForStudents #InternshipOpportunities #StudentLife #MakeItHappen #YouGotThis”,
+platform: “Instagram + LinkedIn + Facebook”,
+type: “Conversion CTA”
+}
+];
+
+const TYPE_COLORS = {
+“Awareness”: { bg: “#1e3a5f”, text: “#60a5fa” },
+“Educational”: { bg: “#1a3a2a”, text: “#4ade80” },
+“Social Proof”: { bg: “#3a1a2e”, text: “#e879f9” },
+“Value / Tips”: { bg: “#3a2a1a”, text: “#fb923c” },
+“Engagement”: { bg: “#1a2a3a”, text: “#38bdf8” },
+“Conversion CTA”: { bg: “#3a1a1a”, text: “#f87171” }
+};
+
+const DAY_BG = [”#0f172a”, “#0f1f2a”, “#1a1025”, “#0a1f1a”, “#1f1510”, “#0a1a2a”, “#1f0f0f”];
+
+export default function ContentPlan() {
+const [activePost, setActivePost] = useState(0);
+const [tab, setTab] = useState(“overview”);
+
+const post = POSTS[activePost];
+const typeStyle = TYPE_COLORS[post.type] || { bg: “#1e1e2e”, text: “#a78bfa” };
+
+return (
+<div style={{
+minHeight: “100vh”,
+background: “#060612”,
+fontFamily: “‘Georgia’, ‘Times New Roman’, serif”,
+color: “#f0ede8”,
+padding: “0”,
+}}>
+{/* Header */}
+<div style={{
+background: “linear-gradient(135deg, #0a0a1a 0%, #12082a 50%, #0a0a1a 100%)”,
+borderBottom: “1px solid #ffffff18”,
+padding: “32px 24px 24px”,
+textAlign: “center”,
+}}>
+<div style={{ display: “flex”, alignItems: “center”, justifyContent: “center”, gap: “10px”, marginBottom: “8px” }}>
+<span style={{ fontSize: “28px” }}>✦</span>
+<span style={{
+fontFamily: “‘Georgia’, serif”,
+fontSize: “13px”,
+letterSpacing: “6px”,
+textTransform: “uppercase”,
+color: “#ff6b35”,
+fontWeight: “400”
+}}>InternSpark</span>
+<span style={{ fontSize: “28px” }}>✦</span>
+</div>
+<h1 style={{
+fontSize: “clamp(24px, 5vw, 42px)”,
+fontWeight: “700”,
+margin: “0 0 8px”,
+letterSpacing: “-1px”,
+lineHeight: “1.1”,
+background: “linear-gradient(135deg, #ffffff 0%, #ff6b35 100%)”,
+WebkitBackgroundClip: “text”,
+WebkitTextFillColor: “transparent”,
+}}>
+Week-Long Content Plan
+</h1>
+<p style={{ color: “#9ca3af”, fontSize: “14px”, margin: “0”, letterSpacing: “1px” }}>
+Apr 28 – May 4, 2026 · 7 Posts · Multi-Platform
+</p>
+
+```
+    {/* Stats Row */}
+    <div style={{ display: "flex", justifyContent: "center", gap: "32px", marginTop: "24px", flexWrap: "wrap" }}>
+      {[["7", "Posts"], ["3", "Platforms"], ["6", "Content Types"], ["5→7", "Canva Designs"]].map(([num, label]) => (
+        <div key={label} style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "22px", fontWeight: "700", color: "#ff6b35" }}>{num}</div>
+          <div style={{ fontSize: "11px", color: "#6b7280", letterSpacing: "1px", textTransform: "uppercase" }}>{label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  {/* Day Selector */}
+  <div style={{
+    display: "flex",
+    overflowX: "auto",
+    padding: "16px 16px 0",
+    gap: "8px",
+    scrollbarWidth: "none",
+    borderBottom: "1px solid #ffffff0a",
+  }}>
+    {POSTS.map((p, i) => (
+      <button
+        key={i}
+        onClick={() => { setActivePost(i); setTab("overview"); }}
+        style={{
+          flex: "0 0 auto",
+          padding: "10px 16px",
+          borderRadius: "10px 10px 0 0",
+          border: "none",
+          cursor: "pointer",
+          background: activePost === i ? "#1a1a2e" : "transparent",
+          color: activePost === i ? "#ff6b35" : "#6b7280",
+          fontFamily: "'Georgia', serif",
+          fontSize: "13px",
+          fontWeight: activePost === i ? "700" : "400",
+          transition: "all 0.2s",
+          borderBottom: activePost === i ? "2px solid #ff6b35" : "2px solid transparent",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {p.day} · {p.date}
+      </button>
+    ))}
+  </div>
+
+  {/* Main Content Area */}
+  <div style={{ padding: "0 16px 40px", maxWidth: "900px", margin: "0 auto" }}>
+
+    {/* Post Header */}
+    <div style={{
+      background: "#0d0d1f",
+      borderRadius: "0 0 16px 16px",
+      padding: "20px 24px",
+      marginBottom: "16px",
+      borderBottom: `3px solid ${typeStyle.text}`,
+    }}>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+        <div>
+          <div style={{
+            display: "inline-block",
+            padding: "3px 10px",
+            borderRadius: "20px",
+            background: typeStyle.bg,
+            color: typeStyle.text,
+            fontSize: "11px",
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            marginBottom: "8px",
+            fontFamily: "monospace",
+          }}>
+            {post.type}
+          </div>
+          <h2 style={{ margin: "0 0 4px", fontSize: "20px", fontWeight: "700" }}>
+            {post.theme}
+          </h2>
+          <p style={{ margin: "0", color: "#9ca3af", fontSize: "13px" }}>
+            Post {activePost + 1} of 7 · {post.platform}
+          </p>
+        </div>
+        <div style={{
+          background: "#ff6b3520",
+          border: "1px solid #ff6b3540",
+          borderRadius: "10px",
+          padding: "10px 16px",
+          textAlign: "center",
+        }}>
+          <div style={{ fontSize: "18px", fontWeight: "700", color: "#ff6b35" }}>{post.time}</div>
+          <div style={{ fontSize: "11px", color: "#6b7280" }}>{post.day}, {post.date}</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Tabs */}
+    <div style={{ display: "flex", gap: "4px", marginBottom: "16px" }}>
+      {["overview", "caption", "canva", "hashtags"].map(t => (
+        <button key={t} onClick={() => setTab(t)} style={{
+          padding: "8px 16px",
+          borderRadius: "8px",
+          border: "none",
+          cursor: "pointer",
+          background: tab === t ? "#ff6b35" : "#ffffff0a",
+          color: tab === t ? "#fff" : "#9ca3af",
+          fontFamily: "'Georgia', serif",
+          fontSize: "12px",
+          textTransform: "capitalize",
+          letterSpacing: "0.5px",
+          transition: "all 0.2s",
+        }}>
+          {t === "overview" ? "📋 Overview" : t === "caption" ? "✍️ Caption" : t === "canva" ? "🎨 Canva Brief" : "# Hashtags"}
+        </button>
+      ))}
+    </div>
+
+    {/* Tab Content */}
+    <div style={{
+      background: "#0d0d1f",
+      borderRadius: "16px",
+      padding: "24px",
+      border: "1px solid #ffffff0a",
+      minHeight: "280px",
+    }}>
+      {tab === "overview" && (
+        <div>
+          <h3 style={{ margin: "0 0 20px", fontSize: "16px", color: "#ff6b35", fontWeight: "400", letterSpacing: "2px", textTransform: "uppercase" }}>Post Overview</h3>
+          <div style={{ display: "grid", gap: "12px" }}>
+            {[
+              ["Post Title", post.title],
+              ["Platform", post.platform],
+              ["Post Time", `${post.day}, ${post.date} at ${post.time}`],
+              ["Content Type", post.type],
+              ["Canva Headline", post.canvaTitle],
+              ["Canva Subtext", post.canvaSubtitle],
+            ].map(([label, val]) => (
+              <div key={label} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
+                <div style={{ minWidth: "120px", color: "#6b7280", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px", paddingTop: "2px" }}>{label}</div>
+                <div style={{ color: "#e5e7eb", fontSize: "14px", lineHeight: "1.5" }}>{val}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {tab === "caption" && (
+        <div>
+          <h3 style={{ margin: "0 0 16px", fontSize: "16px", color: "#ff6b35", fontWeight: "400", letterSpacing: "2px", textTransform: "uppercase" }}>Post Caption</h3>
+          <div style={{
+            background: "#060612",
+            borderRadius: "10px",
+            padding: "20px",
+            fontSize: "14px",
+            lineHeight: "1.8",
+            color: "#d1d5db",
+            whiteSpace: "pre-wrap",
+            border: "1px solid #ffffff08",
+          }}>
+            {post.caption}
+          </div>
+        </div>
+      )}
+
+      {tab === "canva" && (
+        <div>
+          <h3 style={{ margin: "0 0 16px", fontSize: "16px", color: "#ff6b35", fontWeight: "400", letterSpacing: "2px", textTransform: "uppercase" }}>🎨 Canva Design Brief</h3>
+          <div style={{ display: "grid", gap: "16px" }}>
+            <div style={{ background: "#060612", borderRadius: "10px", padding: "16px", border: "1px solid #ff6b3530" }}>
+              <div style={{ color: "#ff6b35", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>Main Headline</div>
+              <div style={{ fontSize: "18px", fontWeight: "700", color: "#f9fafb" }}>"{post.canvaTitle}"</div>
+            </div>
+            <div style={{ background: "#060612", borderRadius: "10px", padding: "16px", border: "1px solid #ffffff0a" }}>
+              <div style={{ color: "#9ca3af", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>Subheadline</div>
+              <div style={{ fontSize: "15px", color: "#d1d5db" }}>{post.canvaSubtitle}</div>
+            </div>
+            <div style={{ background: "#060612", borderRadius: "10px", padding: "16px", border: "1px solid #ffffff0a" }}>
+              <div style={{ color: "#9ca3af", fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", marginBottom: "8px" }}>Visual Direction</div>
+              <div style={{ fontSize: "13px", color: "#d1d5db", lineHeight: "1.7" }}>{post.canvaVisual}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tab === "hashtags" && (
+        <div>
+          <h3 style={{ margin: "0 0 16px", fontSize: "16px", color: "#ff6b35", fontWeight: "400", letterSpacing: "2px", textTransform: "uppercase" }}>Hashtag Set</h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+            {post.hashtags.split(" ").map(tag => (
+              <span key={tag} style={{
+                background: "#1a1a2e",
+                color: "#60a5fa",
+                padding: "5px 12px",
+                borderRadius: "20px",
+                fontSize: "13px",
+                border: "1px solid #3b4fc820",
+                fontFamily: "monospace",
+              }}>{tag}</span>
+            ))}
+          </div>
+          <p style={{ color: "#6b7280", fontSize: "12px", marginTop: "16px", lineHeight: "1.6" }}>
+            💡 Tip: Use all hashtags in the first comment (not caption) on Instagram to keep captions clean, while still maximizing reach.
+          </p>
+        </div>
+      )}
+    </div>
+
+    {/* Navigation Arrows */}
+    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "16px" }}>
+      <button
+        onClick={() => setActivePost(Math.max(0, activePost - 1))}
+        disabled={activePost === 0}
+        style={{
+          padding: "10px 20px",
+          borderRadius: "10px",
+          border: "1px solid #ffffff15",
+          background: "transparent",
+          color: activePost === 0 ? "#374151" : "#9ca3af",
+          cursor: activePost === 0 ? "not-allowed" : "pointer",
+          fontFamily: "'Georgia', serif",
+          fontSize: "13px",
+        }}
+      >← Previous Post</button>
+      <button
+        onClick={() => setActivePost(Math.min(POSTS.length - 1, activePost + 1))}
+        disabled={activePost === POSTS.length - 1}
+        style={{
+          padding: "10px 20px",
+          borderRadius: "10px",
+          border: "1px solid #ff6b3540",
+          background: "#ff6b3515",
+          color: activePost === POSTS.length - 1 ? "#374151" : "#ff6b35",
+          cursor: activePost === POSTS.length - 1 ? "not-allowed" : "pointer",
+          fontFamily: "'Georgia', serif",
+          fontSize: "13px",
+        }}
+      >Next Post →</button>
+    </div>
+
+    {/* Full Schedule Table */}
+    <div style={{ marginTop: "32px" }}>
+      <h3 style={{ fontSize: "14px", color: "#ff6b35", letterSpacing: "3px", textTransform: "uppercase", fontWeight: "400", marginBottom: "16px" }}>
+        ✦ Full Week Schedule
+      </h3>
+      <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #ffffff0a" }}>
+        {POSTS.map((p, i) => {
+          const ts = TYPE_COLORS[p.type] || { bg: "#1e1e2e", text: "#a78bfa" };
+          return (
+            <div
+              key={i}
+              onClick={() => { setActivePost(i); setTab("overview"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                padding: "12px 16px",
+                background: activePost === i ? "#1a1a2e" : i % 2 === 0 ? "#0a0a18" : "#0d0d1f",
+                cursor: "pointer",
+                transition: "background 0.2s",
+                borderLeft: activePost === i ? "3px solid #ff6b35" : "3px solid transparent",
+                flexWrap: "wrap",
+                gap: "8px",
+              }}
+            >
+              <div style={{ minWidth: "70px", fontWeight: "700", color: "#ff6b35", fontSize: "13px" }}>{p.day} {p.date}</div>
+              <div style={{ minWidth: "70px", color: "#9ca3af", fontSize: "12px", fontFamily: "monospace" }}>{p.time}</div>
+              <div style={{ flex: 1, fontSize: "13px", color: "#e5e7eb" }}>{p.theme}</div>
+              <div style={{
+                padding: "2px 10px", borderRadius: "20px",
+                background: ts.bg, color: ts.text, fontSize: "10px",
+                letterSpacing: "1px", textTransform: "uppercase", whiteSpace: "nowrap",
+              }}>{p.type}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* Strategy Notes */}
+    <div style={{
+      marginTop: "24px",
+      background: "#0d0d1f",
+      borderRadius: "12px",
+      padding: "20px 24px",
+      border: "1px solid #ffffff0a",
+    }}>
+      <h3 style={{ fontSize: "13px", color: "#ff6b35", letterSpacing: "3px", textTransform: "uppercase", fontWeight: "400", margin: "0 0 16px" }}>✦ Strategy Notes</h3>
+      <div style={{ display: "grid", gap: "10px" }}>
+        {[
+          ["📅", "Posting cadence", "Daily posts across the week, timed for peak engagement windows (9–11 AM weekdays, 3 PM Fridays, 10–11 AM weekends)."],
+          ["🎨", "Canva format", "Design all posts at 1080×1080px (square) for Instagram + LinkedIn. Use InternSpark brand colors: Deep Navy #0f2a4a, Coral Orange #ff6b35, Off-White #f8f5f0."],
+          ["📢", "Platform priority", "Instagram is primary. LinkedIn for professional reach. Facebook for broader awareness. Twitter/X for tips content."],
+          ["💬", "Engagement goal", "Reply to ALL comments within 2 hours on Mon–Wed to boost algorithm reach on early-week posts."],
+          ["🔗", "Link in bio", "Update the link-in-bio tool (Linktree or similar) each day to point to the most relevant page (sign-up, browse by industry, etc.)."],
+        ].map(([icon, label, desc]) => (
+          <div key={label} style={{ display: "flex", gap: "12px" }}>
+            <span style={{ fontSize: "18px", lineHeight: "1" }}>{icon}</span>
+            <div>
+              <span style={{ color: "#9ca3af", fontSize: "12px", textTransform: "uppercase", letterSpacing: "1px" }}>{label}: </span>
+              <span style={{ color: "#d1d5db", fontSize: "13px" }}>{desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</div>
+```
+
+);
+}
